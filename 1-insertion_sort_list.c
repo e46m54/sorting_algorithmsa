@@ -1,4 +1,5 @@
 #include "sort.h"
+#include <stdio.h>
 /**
  * insertion_sort_list - insertion sort algorithm for doubly linked list
  * @list: pointer to array to sort
@@ -6,40 +7,41 @@
 void insertion_sort_list(listint_t **list)
 {
 
-listint_t *node, *head, *temp;
-int i, j, changed;
-
+listint_t *node, *tmp, *next, *tmp_next, *tmp_prev;
+int i = 0;
 node = *list;
-for (i = 0; node != NULL; i++)
+node = node->next;
+
+while (node != NULL)
 {
-	head = *list;
-	changed = 0;
-	for (j = 0; j < i; j++)
+	tmp = node;
+	next = node->next;
+	tmp_next = tmp->next; /*Will be NULL for the last Node*/
+	tmp_prev = tmp->prev;
+
+	while (tmp->prev != NULL && tmp_prev->n > tmp->n)
 	{
-		temp = node->next;
-
-		if (head->n > node->n)
+		if (tmp_next != NULL)
+			tmp_next->prev = tmp_prev;
+		tmp_prev->next = tmp_next;
+		if (tmp_prev->prev == NULL)
 		{
-			node->prev->next = node->next;
-			if (temp != NULL)
-				node->next->prev = node->prev;
-
-			if (j == 0)
-				*list = node;
-			else
-				head->prev->next = node;
-
-			node->prev = head->prev;
-			head->prev = node;
-			node->next = head;
-			node = temp;
-			print_list(*list);
-			changed = 1;
-			break;
+			tmp_prev->prev = tmp;
+			*list = tmp;
+			tmp->prev = NULL;
 		}
-		head = head->next;
+		else
+		{
+			tmp->prev = tmp_prev->prev;
+			tmp_prev->prev->next = tmp;
+			tmp_prev->prev = tmp;
+		}
+		tmp->next = tmp_prev;
+		tmp_prev = tmp->prev;
+		tmp_next = tmp->next;
+		print_list(*list);
 	}
-	if (changed == 0)
-		node = node->next;
+	node = next;
+	i++;
 }
 }
