@@ -49,11 +49,12 @@ for (j = start; j <= end - 1; j++)
 {
 	if (array[j] < pivot)
 	{
-		swap_int1(array, i, j);
 		i++;
+		swap_int1(array, i, j);
+		print_array(array, size);
 	}
 }
-swap_int1(array, i+1, end);
+swap_int1(array, i + 1, end);
 print_array(array, size);
 return (i+1);
 }
