@@ -14,7 +14,6 @@ if (list == NULL || (*list)->next == NULL)
 	return;
 node = *list;
 node = node->next;
-
 while (node != NULL)
 {
 	tmp = node;
