@@ -42,10 +42,10 @@ if (start < end)
 size_t partition(int *array, size_t size, int start, int end)
 {
 int pivot = array[end];
-int i = start;
+int i = start - 1;
 int j;
 
-for (j = i; j <= end - 1; j++)
+for (j = start; j <= end - 1; j++)
 {
 	if (array[j] < pivot)
 	{
@@ -53,9 +53,9 @@ for (j = i; j <= end - 1; j++)
 		i++;
 	}
 }
-swap_int1(array, i, end);
+swap_int1(array, i+1, end);
 print_array(array, size);
-return (i);
+return (i+1);
 }
 
 /**
